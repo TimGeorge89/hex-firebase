@@ -1,12 +1,15 @@
 <template>
   <div class="home">
+
+    <Register v-if="showModal"></Register>
+
     <div class="main-container">
       <div class="wrapper">
         <!-- NAVIGATION -->
         <div class="nav">
           <!-- single button -->
           <div class="register">
-            <button>Register</button>
+            <button @click="toggleModal()">Register</button>
           </div>
           <!-- single button -->
           <div class="sign-in">
@@ -47,7 +50,8 @@
           <h1>Your Color List:</h1>
           <div v-for="item in list" :key="item" class="list">
             <ul>
-              <li>{{ item }}</li>
+              <li :style="{ background: item }" :class="item">{{ item }}</li>
+              <a @click="remove(item)">Remove</a>
             </ul>
           </div>
         </div>
@@ -57,15 +61,25 @@
 </template>
 
 <script>
+import Register from "@/components/Register";
+
 export default {
   data() {
     return {
       displayedData: 'your hex will display here',
       activeColor: '',
-      list: []
+      list: [],
+      showModal: false
     }
   },
+  components: {
+    Register
+  },
   methods: {
+   toggleModal() {
+     this.showModal = !this.showModal
+   },
+    // generates random hex and makes sure its .length === 6
     randomColor() {
       const randomColor = Math.floor(Math.random()*16777215).toString(16)
       if (randomColor.length === 6) {
@@ -73,13 +87,22 @@ export default {
         this.activeColor = this.displayedData
       }
     },
+    // checks to see if list contains and pushes to list
     addToList() {
-      this.list.push(this.displayedData)
+      if (!this.list.includes(this.displayedData) && this.list.length < 10 && this.displayedData != 'your hex will display here') {
+        this.list.push(this.displayedData)
+      }
     },
+    // resets all values
     reset() {
       this.displayedData = 'your hex will display here'
       this.activeColor = ''
       this.list = []
+    },
+    // removes a single item from the list
+    remove(item) {
+      let index = this.list.indexOf(item)
+      this.list.splice(index, 1)
     }
   }
 }
@@ -147,6 +170,9 @@ button {
   height: 300px;
   width: 300px;
   border: 1px solid black;
+  p {
+    font-size: 18px;
+  }
 }
 
 // BUTTONS
@@ -165,8 +191,24 @@ button {
     margin: 15px 0;
   }
   .list {
+    display: flex;
+    justify-content: center;
     ul {
+      display: flex;
       list-style: none;
+      a {
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+        text-decoration: none;
+        color: black;
+        cursor: pointer;
+      }
+      li {
+        font-size: 18px;
+        margin: 6px 0;
+        width: 150px;
+      }
     }
   }
 }
