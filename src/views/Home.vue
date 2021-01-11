@@ -34,9 +34,9 @@
             <button>List</button>
           </div>
           <!-- single button -->
-          <div class="button">
+          <!-- <div class="button">
             <button>Save</button>
-          </div>
+          </div> -->
           <!-- single button -->
           <div @click="reset()" class="button">
             <button>Reset</button>
