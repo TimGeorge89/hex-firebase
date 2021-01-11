@@ -17,7 +17,7 @@
         <div class="header">
           <h1>RANDOM HEX</h1>
           <p>Generates a random hex value!</p>
-          <p>Create an account and log in to save your favorites!</p>
+          <!-- <p>Create an account and log in to save your favorites!</p> -->
         </div>
         <!-- COLOR DISPLAY -->
         <div :style="{ background: activeColor }" class="color-display">
