@@ -1,21 +1,18 @@
 <template>
   <div class="home">
-
-    <Register v-if="showModal"></Register>
+    <Register v-if="showModal" @close="showModal = false"></Register>
 
     <div class="main-container">
       <div class="wrapper">
         <!-- NAVIGATION -->
-        <div class="nav">
-          <!-- single button -->
+        <!-- <div class="nav">
           <div class="register">
-            <button @click="toggleModal()">Register</button>
+            <button @click="toggleModal()">Sign Up</button>
           </div>
-          <!-- single button -->
-          <div class="sign-in">
-            <button>Sign In</button>
+          <div class="log-in">
+            <button>Log In</button>
           </div>
-        </div>
+        </div> -->
         <!-- HEADER -->
         <div class="header">
           <h1>RANDOM HEX</h1>
@@ -30,7 +27,7 @@
         <div class="buttons">
           <!-- single button -->
           <div @click="randomColor()" class="button">
-            <button >Generate</button>
+            <button>Generate</button>
           </div>
           <!-- single button -->
           <div @click="addToList()" class="button">
@@ -48,6 +45,7 @@
         <!-- COLOR LIST -->
         <div class="color-list">
           <h1>Your Color List:</h1>
+          <p>{{ displayWarning }}</p>
           <div v-for="item in list" :key="item" class="list">
             <ul>
               <li :style="{ background: item }" :class="item">{{ item }}</li>
@@ -66,46 +64,59 @@ import Register from "@/components/Register";
 export default {
   data() {
     return {
-      displayedData: 'your hex will display here',
-      activeColor: '',
+      displayedData: "your hex will display here",
+      activeColor: "",
       list: [],
-      showModal: false
-    }
+      showModal: false,
+      displayWarning: "",
+    };
   },
   components: {
-    Register
+    Register,
   },
   methods: {
-   toggleModal() {
-     this.showModal = !this.showModal
-   },
+    toggleModal() {
+      this.showModal = !this.showModal;
+    },
     // generates random hex and makes sure its .length === 6
     randomColor() {
-      const randomColor = Math.floor(Math.random()*16777215).toString(16)
-      if (randomColor.length === 6) {
-        this.displayedData = '#' + randomColor
-        this.activeColor = this.displayedData
+      const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+      if (randomColor.length === 6 && randomColor !== this.displayedData) {
+        this.displayedData = "#" + randomColor;
+        this.activeColor = this.displayedData;
       }
     },
     // checks to see if list contains and pushes to list
     addToList() {
-      if (!this.list.includes(this.displayedData) && this.list.length < 10 && this.displayedData != 'your hex will display here') {
-        this.list.push(this.displayedData)
+      if (
+        !this.list.includes(this.displayedData) &&
+        this.list.length < 10 &&
+        this.displayedData != "your hex will display here"
+      ) {
+        this.list.push(this.displayedData);
+      } else if (this.list.length == 10) {
+        this.displayWarning = "10 color max. More features coming soon!";
       }
     },
     // resets all values
     reset() {
-      this.displayedData = 'your hex will display here'
-      this.activeColor = ''
-      this.list = []
+      this.displayedData = "your hex will display here";
+      this.activeColor = "";
+      this.list = [];
+      if (this.list.length < 10) {
+        this.displayWarning = ""
+      }
     },
     // removes a single item from the list
     remove(item) {
-      let index = this.list.indexOf(item)
-      this.list.splice(index, 1)
-    }
-  }
-}
+      let index = this.list.indexOf(item);
+      this.list.splice(index, 1);
+      if (this.list.length < 10) {
+        this.displayWarning = ""
+      }
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -142,10 +153,16 @@ button {
   padding: 25px 50px;
 }
 
+@media screen and (max-width: 550px) {
+  .wrapper {
+    padding: 20px 20px;
+  }
+}
+
 // NAVIGATION
 .nav {
   display: flex;
-  .sign-in {
+  .log-in {
     margin-left: auto;
   }
 }
@@ -158,6 +175,17 @@ button {
   }
   p {
     font-size: 22px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .header {
+    h1 {
+      font-size: 38px;
+    }
+    p {
+      font-size: 18px;
+    }
   }
 }
 
@@ -175,6 +203,13 @@ button {
   }
 }
 
+@media screen and (max-width: 550px) {
+  .color-display {
+    height: 280px;
+    width: 280px;
+  }
+}
+
 // BUTTONS
 .buttons {
   display: flex;
@@ -185,10 +220,22 @@ button {
   }
 }
 
+@media screen and (max-width: 550px) {
+  .buttons {
+    button {
+      font-size: 15px;
+    }
+  }
+}
+
 // COLOR LIST
 .color-list {
   h1 {
-    margin: 15px 0;
+    margin-top: 15px;
+  }
+  p {
+    color: red;
+    margin-bottom: 10px;
   }
   .list {
     display: flex;
