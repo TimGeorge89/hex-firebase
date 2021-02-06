@@ -94,8 +94,8 @@ export default {
         this.displayedData != "your hex will display here"
       ) {
         this.list.push(this.displayedData);
-      } else if (this.list.length == 10) {
-        this.displayWarning = "10 color max. More features coming soon!";
+      } else if (this.list.length == 3) {
+        this.displayWarning = "3 color max. More features coming soon!";
       }
     },
     // resets all values
