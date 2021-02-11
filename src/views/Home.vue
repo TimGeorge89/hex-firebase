@@ -34,7 +34,7 @@
         </div>
         <!-- COLOR LIST -->
         <div class="color-list">
-          <h1>Your Color List:</h1>
+          <!-- <h1>Your Color List:</h1> -->
           <p>{{ displayWarning }}</p>
           <div v-for="item in list" :key="item" class="list">
             <ul>
@@ -182,8 +182,10 @@ button {
   h1 {
     font-size: 45px;
     padding: 15px 0 10px 0;
+    color: black;
   }
   p {
+    color: black;
     font-size: 22px;
   }
 }
@@ -208,7 +210,7 @@ button {
 // BUTTONS
 .buttons {
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   button {
     margin: 0 10px;
     padding: 10px 15px;
@@ -221,12 +223,9 @@ button {
 
 // COLOR LIST
 .color-list {
-  h1 {
-    // margin-top: 15px;
-  }
   p {
     font-size: 20px;
-    color: white;
+    color: black;
     margin-bottom: 10px;
   }
   .list {
@@ -245,7 +244,7 @@ button {
         cursor: pointer;
       }
       li {
-        font-size: 18px;
+        font-size: 23px;
         width: 100px;
         padding: 12px 12px;
         margin: 5px;
