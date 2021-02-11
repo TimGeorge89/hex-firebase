@@ -3,44 +3,34 @@
     <Register v-if="showModal" @close="showModal = false"></Register>
 
     <div class="main-container">
-      <div class="wrapper">
-        <!-- NAVIGATION -->
-        <!-- <div class="nav">
-          <div class="register">
-            <button @click="toggleModal()">Sign Up</button>
+      <main class="inner-container">
+        <div :style="{ background: activeColor }" class="wrapper">
+          <!-- HEADER -->
+          <header class="header">
+            <h1>RANDOM HEX</h1>
+            <p>Generates a random hex value!</p>
+            <!-- <p>Create an account and log in to save your favorites!</p> -->
+          </header>
+          <!-- COLOR DISPLAY -->
+          <div class="color-display">
+            <p>{{ displayedData }}</p>
           </div>
-          <div class="log-in">
-            <button>Log In</button>
-          </div>
-        </div> -->
-        <!-- HEADER -->
-        <div class="header">
-          <h1>RANDOM HEX</h1>
-          <p>Generates a random hex value!</p>
-          <!-- <p>Create an account and log in to save your favorites!</p> -->
-        </div>
-        <!-- COLOR DISPLAY -->
-        <div :style="{ background: activeColor }" class="color-display">
-          <p>{{ displayedData }}</p>
-        </div>
-        <!-- BUTTONS -->
-        <div class="buttons">
-          <!-- single button -->
-          <div @click="randomColor()" class="button">
-            <button>Generate</button>
-          </div>
-          <!-- single button -->
-          <div @click="addToList()" class="button">
-            <button>List</button>
-          </div>
-          <!-- single button -->
-          <!-- <div class="button">
-            <button>Save</button>
-          </div> -->
-          <!-- single button -->
-          <div @click="reset()" class="button">
-            <button>Reset</button>
-          </div>
+          <!-- BUTTONS -->
+          <div class="buttons">
+            <!-- single button -->
+            <div @click="randomColor()" class="button">
+              <button>Generate</button>
+            </div>
+            <div class="buttons">
+              <!-- single button -->
+            <div @click="reset()" class="button">
+              <button>Reset</button>
+            </div>
+            </div>
+              <!-- single button -->
+            <div @click="addToList()" class="button">
+              <button>List</button>
+            </div>
         </div>
         <!-- COLOR LIST -->
         <div class="color-list">
@@ -53,7 +43,8 @@
             </ul>
           </div>
         </div>
-      </div>
+        </div>
+      </main>
     </div>
   </div>
 </template>
@@ -64,8 +55,8 @@ import Register from "@/components/Register";
 export default {
   data() {
     return {
-      displayedData: "your hex will display here",
-      activeColor: "",
+      displayedData: "#5b7a8a",
+      activeColor: "#5b7a8a",
       list: [],
       showModal: false,
       displayWarning: "",
@@ -90,18 +81,18 @@ export default {
     addToList() {
       if (
         !this.list.includes(this.displayedData) &&
-        this.list.length < 10 &&
-        this.displayedData != "your hex will display here"
+        this.list.length < 5 &&
+        this.displayedData != "#5b7a8a"
       ) {
         this.list.push(this.displayedData);
-      } else if (this.list.length == 3) {
-        this.displayWarning = "3 color max. More features coming soon!";
+      } else if (this.list.length == 5) {
+        this.displayWarning = "5 color max. More features coming soon!";
       }
     },
     // resets all values
     reset() {
-      this.displayedData = "your hex will display here";
-      this.activeColor = "";
+      this.displayedData = "#5b7a8a";
+      this.activeColor = "#5b7a8a";
       this.list = [];
       if (this.list.length < 10) {
         this.displayWarning = ""
@@ -115,7 +106,10 @@ export default {
         this.displayWarning = ""
       }
     },
-  },
+    created() {
+      this.displayedData = this.randomColor()
+    }
+  }
 };
 </script>
 
@@ -143,27 +137,43 @@ button {
 }
 
 .main-container {
-  background: white;
+  // display: flex;
+  // background: white;
+  // height: 90vh;
+  // width: 90vw;
+  
+}
+
+.inner-container {
+  // display: flex;
+  // background: red;
+  // height: 90vh;
+  // width: 90vw;
+  // text-align: center;
+  // border-radius: 10px;
+  // box-shadow: 10px 15px 10px rgba(0, 0, 0, 0.4);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  height: 90vh;
+  width: 90vw;
+  background-color: white;
+  padding: 25px 50px;
+  margin: 20px;
   border-radius: 10px;
   box-shadow: 10px 15px 10px rgba(0, 0, 0, 0.4);
 }
 
-.wrapper {
-  padding: 25px 50px;
-}
-
-@media screen and (max-width: 550px) {
-  .wrapper {
-    padding: 20px 20px;
-  }
-}
-
 // NAVIGATION
 .nav {
-  display: flex;
+  // display: flex;
   .log-in {
-    margin-left: auto;
+    // margin-left: auto;
   }
 }
 
@@ -178,63 +188,45 @@ button {
   }
 }
 
-@media screen and (max-width: 550px) {
-  .header {
-    h1 {
-      font-size: 38px;
-    }
-    p {
-      font-size: 18px;
-    }
-  }
-}
-
 // COLOR DISPLAY
 .color-display {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px auto;
-  height: 300px;
-  width: 300px;
-  border: 1px solid black;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  // margin: 20px auto;
+  // height: 300px;
+  // width: 300px;
+  background: white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 20px 0 20px 0;
   p {
-    font-size: 18px;
-  }
-}
-
-@media screen and (max-width: 550px) {
-  .color-display {
-    height: 280px;
-    width: 280px;
+    font-size: 30px;
   }
 }
 
 // BUTTONS
 .buttons {
   display: flex;
-  justify-content: center;
+  margin-bottom: 20px;
   button {
     margin: 0 10px;
-    width: 80px;
-  }
-}
-
-@media screen and (max-width: 550px) {
-  .buttons {
-    button {
-      font-size: 15px;
-    }
+    padding: 10px 15px;
+    width: 100px;
+    background-color: white;
+    border: none;
+    border-radius: 10px;
   }
 }
 
 // COLOR LIST
 .color-list {
   h1 {
-    margin-top: 15px;
+    // margin-top: 15px;
   }
   p {
-    color: red;
+    font-size: 20px;
+    color: white;
     margin-bottom: 10px;
   }
   .list {
@@ -246,6 +238,7 @@ button {
       a {
         display: flex;
         align-items: center;
+        font-size: 25px;
         padding-left: 10px;
         text-decoration: none;
         color: black;
@@ -253,10 +246,168 @@ button {
       }
       li {
         font-size: 18px;
-        margin: 6px 0;
-        width: 150px;
+        width: 100px;
+        padding: 12px 12px;
+        margin: 5px;
+        border: 2px solid white;
+        border-radius: 10px;
       }
     }
   }
 }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// * {
+//   padding: 0;
+//   margin: 0;
+// }
+
+// html {
+//   height: 100vh;
+// }
+
+// body {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   height: 100%;
+//   background: grey;
+// }
+
+// button {
+//   outline: none;
+//   font-size: 18px;
+// }
+
+// .main-container {
+//   background: white;
+//   max-width: 1290px;
+//   text-align: center;
+//   border-radius: 10px;
+//   box-shadow: 10px 15px 10px rgba(0, 0, 0, 0.4);
+// }
+
+// .wrapper {
+//   padding: 25px 50px;
+// }
+
+// @media screen and (max-width: 550px) {
+//   .wrapper {
+//     padding: 20px 20px;
+//   }
+// }
+
+// // NAVIGATION
+// .nav {
+//   display: flex;
+//   .log-in {
+//     margin-left: auto;
+//   }
+// }
+
+// // HEADER
+// .header {
+//   h1 {
+//     font-size: 45px;
+//     padding: 15px 0 10px 0;
+//   }
+//   p {
+//     font-size: 22px;
+//   }
+// }
+
+// @media screen and (max-width: 550px) {
+//   .header {
+//     h1 {
+//       font-size: 38px;
+//     }
+//     p {
+//       font-size: 18px;
+//     }
+//   }
+// }
+
+// // COLOR DISPLAY
+// .color-display {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   margin: 20px auto;
+//   height: 300px;
+//   width: 300px;
+//   border: 1px solid black;
+//   p {
+//     font-size: 18px;
+//   }
+// }
+
+// @media screen and (max-width: 550px) {
+//   .color-display {
+//     height: 280px;
+//     width: 280px;
+//   }
+// }
+
+// // BUTTONS
+// .buttons {
+//   display: flex;
+//   justify-content: center;
+//   button {
+//     margin: 0 10px;
+//     width: 80px;
+//   }
+// }
+
+// @media screen and (max-width: 550px) {
+//   .buttons {
+//     button {
+//       font-size: 15px;
+//     }
+//   }
+// }
+
+// // COLOR LIST
+// .color-list {
+//   h1 {
+//     margin-top: 15px;
+//   }
+//   p {
+//     color: red;
+//     margin-bottom: 10px;
+//   }
+//   .list {
+//     display: flex;
+//     justify-content: center;
+//     ul {
+//       display: flex;
+//       list-style: none;
+//       a {
+//         display: flex;
+//         align-items: center;
+//         padding-left: 10px;
+//         text-decoration: none;
+//         color: black;
+//         cursor: pointer;
+//       }
+//       li {
+//         font-size: 18px;
+//         margin: 6px 0;
+//         width: 150px;
+//       }
+//     }
+//   }
+// }
