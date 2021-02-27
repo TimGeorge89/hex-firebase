@@ -1,4 +1,4 @@
-# hex-firebase
+# random-hex
 
 ## Project setup
 ```
